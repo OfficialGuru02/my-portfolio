@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lens & Light · Photographer</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- reset & base ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background: #faf8f6;
+      color: #1e1e1e;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ----- header / nav ----- */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: #2c2c2c;
+    }
+    .logo span {
+      font-weight: 600;
+      color: #a67c5b;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #2c2c2c;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #a67c5b;
+    }
+
+    /* ----- hero ----- */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.5rem 0 3.5rem;
+      gap: 2rem;
+    }
+
+    .hero-content {
+      flex: 1 1 300px;
+    }
+    .hero-content .badge {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #a67c5b;
+      border: 1px solid #a67c5b;
+      display: inline-block;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      margin-bottom: 1rem;
+    }
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .hero-content h1 strong {
+      font-weight: 600;
+      color: #1e1e1e;
+    }
+    .hero-content p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 450px;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      background: #1e1e1e;
+      color: #fff;
+      padding: 0.8rem 2.4rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: background 0.2s, transform 0.1s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #a67c5b;
+      transform: scale(1.02);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #1e1e1e;
+      color: #1e1e1e;
+      margin-left: 0.8rem;
+    }
+    .btn-outline:hover {
+      background: #1e1e1e;
+      color: #fff;
+    }
+
+    .hero-image {
+      flex: 1 1 300px;
+      background: #e5ddd4;
+      height: 280px;
+      border-radius: 20px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="400" height="300" fill="%23d9cec1"/><circle cx="200" cy="130" r="50" fill="%23b8a99b"/><circle cx="170" cy="110" r="8" fill="%232c2c2c"/><circle cx="230" cy="110" r="8" fill="%232c2c2c"/><path d="M180 150 Q200 170 220 150" stroke="%232c2c2c" stroke-width="5" fill="none"/><rect x="90" y="210" width="220" height="30" rx="8" fill="%23a67c5b"/><rect x="140" y="240" width="120" height="30" rx="8" fill="%23836b56"/></svg>');
+      background-size: cover;
+      background-position: center;
+      min-height: 200px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    /* ----- section titles ----- */
+    section h2 {
+      font-size: 2.4rem;
+      font-weight: 300;
+      margin: 2.5rem 0 1.8rem;
+      position: relative;
+      display: inline-block;
+    }
+    section h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 60px;
+      height: 3px;
+      background: #a67c5b;
+    }
+
+    /* ----- gallery grid ----- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0 1rem;
+    }
+
+    .gallery-item {
+      background: #ece6df;
+      border-radius: 16px;
+      height: 240px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.25s ease, box-shadow 0.25s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      cursor: default;
+    }
+    .gallery-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    }
+
+    /* gallery placeholders (photography themed) */
+    .g-item-1 { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="400" height="300" fill="%23c8b9aa"/><circle cx="200" cy="120" r="60" fill="%23b09b88"/><circle cx="170" cy="100" r="10" fill="%23333"/><circle cx="230" cy="100" r="10" fill="%23333"/><path d="M180 145 Q200 165 220 145" stroke="%23333" stroke-width="6" fill="none"/><rect x="100" y="210" width="200" height="30" rx="10" fill="%23917b67"/></svg>'); }
+    .g-item-2 { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="400" height="300" fill="%23b3a18e"/><circle cx="130" cy="140" r="40" fill="%23948370"/><circle cx="270" cy="100" r="45" fill="%2382725e"/><rect x="70" y="210" width="260" height="25" rx="10" fill="%236b5d4b"/><path d="M90 180 L310 180" stroke="%235a4e3e" stroke-width="8"/></svg>'); }
+    .g-item-3 { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="400" height="300" fill="%23d1c3b5"/><circle cx="200" cy="140" r="70" fill="%23b7a696"/><circle cx="170" cy="120" r="10" fill="%23222"/><circle cx="230" cy="120" r="10" fill="%23222"/><path d="M180 165 Q200 185 220 165" stroke="%23222" stroke-width="7" fill="none"/><rect x="110" y="230" width="180" height="30" rx="8" fill="%23917b67"/></svg>'); }
+    .g-item-4 { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="400" height="300" fill="%23c4b3a1"/><circle cx="160" cy="120" r="45" fill="%23a6927d"/><circle cx="240" cy="160" r="55" fill="%2395836e"/><rect x="100" y="225" width="200" height="25" rx="10" fill="%237a6957"/></svg>'); }
+    .g-item-5 { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="400" height="300" fill="%23b9a99a"/><circle cx="200" cy="130" r="65" fill="%23a18d7a"/><circle cx="170" cy="110" r="12" fill="%23222"/><circle cx="230" cy="110" r="12" fill="%23222"/><path d="M175 155 Q200 175 225 155" stroke="%23222" stroke-width="8" fill="none"/><rect x="120" y="220" width="160" height="25" rx="12" fill="%23816f5c"/></svg>'); }
+    .g-item-6 { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"><rect width="400" height="300" fill="%23d6c8ba"/><circle cx="140" cy="150" r="50" fill="%23b7a392"/><circle cx="260" cy="120" r="55" fill="%23a08b78"/><rect x="80" y="230" width="240" height="20" rx="8" fill="%23877360"/></svg>'); }
+
+    /* ----- about ----- */
+    .about-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      align-items: center;
+      margin: 2.5rem 0 3rem;
+      background: #f3efe9;
+      padding: 2.5rem;
+      border-radius: 32px;
+    }
+    .about-text {
+      flex: 2 1 300px;
+    }
+    .about-text h3 {
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+    .about-text h3 span {
+      font-weight: 600;
+      color: #a67c5b;
+    }
+    .about-text p {
+      color: #3d3d3d;
+      margin: 1rem 0 1.2rem;
+      font-size: 1.05rem;
+    }
+    .about-signature {
+      font-style: italic;
+      color: #5f4e3d;
+      font-size: 1.1rem;
+    }
+    .about-avatar {
+      flex: 1 1 160px;
+      background: #ddd0c0;
+      border-radius: 50%;
+      width: 160px;
+      height: 160px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><circle cx="100" cy="80" r="45" fill="%23b8a99b"/><circle cx="80" cy="70" r="8" fill="%23222222"/><circle cx="120" cy="70" r="8" fill="%23222222"/><path d="M85 95 Q100 110 115 95" stroke="%23222222" stroke-width="5" fill="none"/><rect x="50" y="130" width="100" height="40" rx="20" fill="%23917b67"/></svg>');
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto;
+    }
+
+    /* ----- contact form ----- */
+    .contact-section {
+      background: #f3efe9;
+      padding: 2.8rem 2.5rem;
+      border-radius: 32px;
+      margin: 2rem 0 4rem;
+    }
+    .contact-section h2 {
+      margin-top: 0;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      max-width: 600px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .form-group label {
+      font-weight: 500;
+      color: #2c2c2c;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+    }
+    .form-group input,
+    .form-group textarea {
+      padding: 0.8rem 1rem;
+      border: 1px solid #d6cec4;
+      border-radius: 40px;
+      font-size: 1rem;
+      background: #fff;
+      transition: border 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #a67c5b;
+      box-shadow: 0 0 0 3px rgba(166, 124, 91, 0.2);
+    }
+    .form-group textarea {
+      border-radius: 24px;
+      min-height: 120px;
+      resize: vertical;
+    }
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .form-row .form-group {
+      flex: 1 1 180px;
+    }
+    .contact-form .btn {
+      align-self: flex-start;
+      background: #a67c5b;
+      border: none;
+      padding: 0.8rem 2.8rem;
+    }
+    .contact-form .btn:hover {
+      background: #1e1e1e;
+    }
+    #formFeedback {
+      margin-top: 0.8rem;
+      font-weight: 500;
+      color: #2c2c2c;
+    }
+
+    /* footer */
+    footer {
+      border-top: 1px solid #ddd2c6;
+      padding: 2rem 0 1.8rem;
+      text-align: center;
+      color: #5f5a55;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    .social-links a {
+      color: #3d3d3d;
+      margin: 0 0.5rem;
+      font-size: 1.2rem;
+      transition: color 0.2s;
+    }
+    .social-links a:hover {
+      color: #a67c5b;
+    }
+
+    /* responsive */
+    @media (max-width: 680px) {
+      .hero-content h1 { font-size: 2.4rem; }
+      nav { flex-direction: column; gap: 0.8rem; }
+      .nav-links { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+      .about-wrap { padding: 1.8rem; }
+      .contact-section { padding: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- navigation -->
+    <nav>
+      <div class="logo"><span>Lens</span>&Light</div>
+      <div class="nav-links">
+        <a href="#gallery">Gallery</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- hero -->
+    <header class="hero" id="home">
+      <div class="hero-content">
+        <span class="badge"><i class="fas fa-camera" style="margin-right:6px;"></i> visual storyteller</span>
+        <h1>Capturing <strong>moments</strong> that last forever</h1>
+        <p>Freelance photography — from intimate portraits to sweeping landscapes. Let's tell your story through light.</p>
+        <div>
+          <a href="#gallery" class="btn">View portfolio</a>
+          <a href="#contact" class="btn btn-outline">Hire me</a>
+        </div>
+      </div>
+      <div class="hero-image" aria-label="photographer hero image"></div>
+    </header>
+
+    <!-- gallery -->
+    <section id="gallery">
+      <h2>Recent work</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item g-item-1" title="Portrait session"></div>
+        <div class="gallery-item g-item-2" title="Urban landscape"></div>
+        <div class="gallery-item g-item-3" title="Nature & light"></div>
+        <div class="gallery-item g-item-4" title="Studio portrait"></div>
+        <div class="gallery-item g-item-5" title="Candid street"></div>
+        <div class="gallery-item g-item-6" title="Golden hour"></div>
+      </div>
+    </section>
+
+    <!-- about -->
+    <section id="about">
+      <div class="about-wrap">
+        <div class="about-text">
+          <h3>Hi, I'm <span>Elena V.</span></h3>
+          <p>With a decade behind the lens, I've worked with clients across the globe — from fashion editorials to intimate weddings. My approach blends documentary honesty with an editorial eye. I believe every frame should feel both authentic and timeless.</p>
+          <p>When I’m not shooting, I’m mentoring young photographers or wandering with my 35mm film camera. Let's create something together.</p>
+          <div class="about-signature">— Elena, based in Lisbon</div>
+        </div>
+        <div class="about-avatar" aria-label="Elena avatar"></div>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section id="contact" class="contact-section">
+      <h2>Let's connect</h2>
+      <form id="contactForm" class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full name</label>
+            <input type="text" id="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" placeholder="you@example.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell me about your project..." required></textarea>
+        </div>
+        <button type="submit" class="btn" id="submitBtn"><i class="fas fa-paper-plane" style="margin-right:8px;"></i>Send message</button>
+        <div id="formFeedback"></div>
+      </form>
+    </section>
+
+    <!-- footer -->
+    <footer>
+      <span>&copy; 2026 Lens&Light · Freelance photographer</span>
+      <div class="social-links">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
+        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      const form = document.getElementById('contactForm');
+      const feedback = document.getElementById('formFeedback');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        // simple validation
+        if (!name || !email || !message) {
+          feedback.style.color = '#b13e3e';
+          feedback.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please fill in all fields.';
+          return;
+        }
+        if (!email.includes('@') || !email.includes('.')) {
+          feedback.style.color = '#b13e3e';
+          feedback.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a valid email address.';
+          return;
+        }
+
+        // simulate sending (functional feedback)
+        feedback.style.color = '#2c2c2c';
+        feedback.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Sending...';
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+
+        setTimeout(() => {
+          // success
+          feedback.style.color = '#1f7a4b';
+          feedback.innerHTML = '<i class="fas fa-check-circle"></i> Thank you, ' + name + '! Your message has been sent. I\'ll reply within 24h.';
+          form.reset();
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        }, 1200);
+      });
+    })();
+  </script>
+</body>
+</html>
